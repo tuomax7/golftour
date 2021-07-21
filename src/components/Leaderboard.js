@@ -55,11 +55,21 @@ const Leaderboard = () => {
     
         return(
             <div>
-                <ol>
-                    {sortedLeaderboard.map(contestant => 
-                        <li key={contestant.name}>{contestant.name} {contestant.score[selectedSeason-2021]}</li>
-                    )}
-                </ol>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Nimi</th>
+                            <th>Bogeypisteet</th>
+                        </tr>
+                    
+                        {sortedLeaderboard.map(contestant => 
+                            <tr key={contestant.name}>
+                                <td>{contestant.name}</td>
+                                <td>{contestant.score[selectedSeason-2021]}</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
         )
     }
