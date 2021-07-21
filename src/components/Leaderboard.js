@@ -4,7 +4,7 @@ import {useState} from 'react'
 
 
 
-const Leaderboard = () => {
+const Leaderboard = ({contestants, setContestants}) => {
 
     const [selectedSeason, setSelectedSeason] = useState(2021)
 
@@ -29,24 +29,9 @@ const Leaderboard = () => {
 
     const BoardListing = () => {
 
-        const leaderboard = [
-            {
-                name: "Johannes Sippola",
-                score: [300, 200, 100]
-            },
-            {
-                name: "Joel Vanhanen",
-                score: [100, 200, 300]
-            },
-            {
-                name: "Tuomas Nummela",
-                score: [400, 200, 100]
-            }
-        ]
-
         //Custom season- and scorebased sorting for leaderboard
     
-        const sortedLeaderboard = leaderboard.sort((a, b) => {
+        const sortedLeaderboard = contestants.sort((a, b) => {
             if(a.score[selectedSeason-2021] > b.score[selectedSeason-2021]){
                 return -1
             }
@@ -58,12 +43,14 @@ const Leaderboard = () => {
                 <table>
                     <tbody>
                         <tr>
+                            <th>Sija</th>
                             <th>Nimi</th>
                             <th>Bogeypisteet</th>
                         </tr>
                     
                         {sortedLeaderboard.map(contestant => 
                             <tr key={contestant.name}>
+                                <td>{sortedLeaderboard.indexOf(contestant)+1}</td>
                                 <td>{contestant.name}</td>
                                 <td>{contestant.score[selectedSeason-2021]}</td>
                             </tr>
