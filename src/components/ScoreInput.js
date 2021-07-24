@@ -1,8 +1,6 @@
 import React from 'react'
 
-const ScoreInput = ({contestants, setContestants}) => {
-
-    const season = 2021
+const ScoreInput = ({contestants, setContestants, currentSeason}) => {
 
 
     const scoreInputted = () => {
@@ -10,7 +8,7 @@ const ScoreInput = ({contestants, setContestants}) => {
 
         changedContestants.map(changedContestant =>
 
-            changedContestant.score[season-2021] += parseInt(document.getElementById(changedContestant.name).value) 
+            changedContestant.score[currentSeason-2021] += parseInt(document.getElementById(changedContestant.name).value) 
 
         )
         setContestants(changedContestants)
@@ -46,7 +44,7 @@ const ScoreInput = ({contestants, setContestants}) => {
 
     return(
         <div>
-            <h2>Kausi {season}</h2>
+            <h2>Kausi {currentSeason}</h2>
             <h3>Syötä kierroksen tiedot</h3>
             <InputForm />
         </div>
