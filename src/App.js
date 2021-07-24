@@ -1,10 +1,13 @@
 import './App.css';
 import Leaderboard from './components/Leaderboard.js'
-import ScoreInput from './components/ScoreInput'
+import ScoreInput from './components/ScoreInput.js'
 import Navbar from './components/Navbar.js'
 
 import {useState} from 'react'
-import RoundListing from './components/RoundListing';
+import RoundListing from './components/RoundListing.js';
+
+// import firebase from './Firebase.js'
+
 
 function App() {
 
@@ -14,22 +17,19 @@ function App() {
             name: "Johannes Sippola",
             score: [80, 0, 0],
             roundWins: [0, 0, 0],
-            records: [28, 0, 0],
-            id: "johannes"
+            records: [28, 0, 0]
         },
         {
             name: "Joel Vanhanen",
             score: [145, 0, 0],
             roundWins: [4, 0, 0],
-            records: [42, 0, 0],
-            id: "joel"
+            records: [42, 0, 0]
         },
         {
             name: "Tuomas Nummela",
             score: [96, 0, 0],
             roundWins: [0, 0, 0],
             records: [29, 0, 0],
-            id: "tuomas"
         }
     ]
   )
