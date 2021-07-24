@@ -8,8 +8,10 @@ const Leaderboard = ({contestants, setContestants, currentSeason, appState}) => 
     const BoardListing = () => {
 
         //Custom season- and scorebased sorting for leaderboard
+
+        const sortedLeaderboard = [...contestants]
     
-        const sortedLeaderboard = contestants.sort((a, b) => {
+        sortedLeaderboard.sort((a, b) => {
             if(a.score[currentSeason-2021] > b.score[currentSeason-2021]){
                 return -1
             }
