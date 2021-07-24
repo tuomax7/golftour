@@ -14,8 +14,7 @@ const ScoreInput = ({contestants, setContestants}) => {
 
         )
         setContestants(changedContestants)
-        console.log(document.getElementsByTagName('input'))
-        //document.getElementsByTagName('input').forEach(input => input.value = 0)
+
     }
 
     const InputForm = () => {

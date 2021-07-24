@@ -10,18 +10,21 @@ function App() {
     [
         {
             name: "Johannes Sippola",
-            score: [0, 0, 0],
-            roundWins: 0
+            score: [59, 0, 0],
+            roundWins: 0,
+            records: [28, 0, 0]
         },
         {
             name: "Joel Vanhanen",
-            score: [0, 0, 0],
-            roundWins: 1
+            score: [113, 0, 0],
+            roundWins: 3,
+            records: [42, 0, 0]
         },
         {
             name: "Tuomas Nummela",
-            score: [0, 0, 0],
-            roundWins: 1
+            score: [67, 0, 0],
+            roundWins: 0,
+            records: [29, 0, 0]
         }
     ]
   )
