@@ -3,36 +3,52 @@ import Leaderboard from './components/Leaderboard.js'
 import ScoreInput from './components/ScoreInput.js'
 import Navbar from './components/Navbar.js'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import RoundListing from './components/RoundListing.js';
 
-// import firebase from './Firebase.js'
+import firebase from './Firebase.js'
 
 
 function App() {
+  const [currentSeason] = useState(2021)
 
-  const [contestants, setContestants] = useState(
-    [
-        {
-            name: "Johannes Sippola",
-            score: [80, 0, 0],
-            roundWins: [0, 0, 0],
-            records: [28, 0, 0]
-        },
-        {
-            name: "Joel Vanhanen",
-            score: [145, 0, 0],
-            roundWins: [4, 0, 0],
-            records: [42, 0, 0]
-        },
-        {
-            name: "Tuomas Nummela",
-            score: [96, 0, 0],
-            roundWins: [0, 0, 0],
-            records: [29, 0, 0],
-        }
-    ]
-  )
+  const [contestants, setContestants] = useState([])
+
+  useEffect(() => {
+    firebase
+    .firestore()
+    .collection('contestants')
+    .onSnapshot((snapshot) => {
+      const newContestants = snapshot.docs.map((doc) => ({
+        ...doc.data()
+      }))
+
+      setContestants(newContestants)
+    })
+  }, [])
+
+  /*
+
+  const [rounds, setRounds] = useState([])
+
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('rounds')
+      .collection('2021')
+      .onSnapshot((snapshot) => {
+        const newRounds = snapshot.docs.map((doc) => ({
+          ...doc.data()
+        }))
+
+        setRounds(newRounds)
+        console.log(rounds)
+      })
+  }, [])
+
+*/
+  
 
   const [rounds, setRounds] = useState(
     [
@@ -71,7 +87,6 @@ function App() {
     ]
   )
 
-  const [currentSeason] = useState(2021)
 
   const [appState, setAppState] = useState("main")
 
@@ -119,4 +134,4 @@ function App() {
   }
 }
 
-export default App;
+export default App

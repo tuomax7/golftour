@@ -12,7 +12,7 @@ const Leaderboard = ({contestants, setContestants, currentSeason, appState}) => 
         const sortedLeaderboard = [...contestants]
     
         sortedLeaderboard.sort((a, b) => {
-            if(a.score[currentSeason-2021] > b.score[currentSeason-2021]){
+            if(a.scores[currentSeason-2021] > b.scores[currentSeason-2021]){
                 return -1
             }
             else return 1
@@ -33,7 +33,7 @@ const Leaderboard = ({contestants, setContestants, currentSeason, appState}) => 
                             <tr key={contestant.name}>
                                 <td>{sortedLeaderboard.indexOf(contestant)+1}</td>
                                 <td>{contestant.name}</td>
-                                <td>{contestant.score[currentSeason-2021]}</td>
+                                <td>{contestant.scores[currentSeason-2021]}</td>
                                 <td>{contestant.roundWins[currentSeason-2021]}</td>
                             </tr>
                         )}
