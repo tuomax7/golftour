@@ -17,8 +17,8 @@ const RoundListing = ({currentSeason, contestants, rounds}) => {
                         <tr key={round.date+round.johannes+round.joel+round.tuomas}>
                             <td>{round.date}</td>
                             <td>{round.course}</td>
-                            <td>{round.johannes}</td>
                             <td>{round.joel}</td>
+                            <td>{round.johannes}</td>
                             <td>{round.tuomas}</td>
                         </tr>
                     )}
