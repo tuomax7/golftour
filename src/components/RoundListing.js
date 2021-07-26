@@ -12,8 +12,8 @@ const RoundListing = ({currentSeason, contestants, rounds}) => {
                         <th>Kenttä</th>
                         {contestants.map(contestant => <th key={contestant.name}>{contestant.name}</th>)}
                     </tr>
-
-                    {rounds[currentSeason-2021].map(round => 
+                    
+                    {rounds['2021'].map(round => 
                         <tr key={round.date+round.johannes+round.joel+round.tuomas}>
                             <td>{round.date}</td>
                             <td>{round.course}</td>

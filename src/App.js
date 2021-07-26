@@ -12,6 +12,67 @@ import firebase from './Firebase.js'
 function App() {
 
   //Rounds to firebase
+
+  const [currentSeason, setCurrentSeason] = useState(2021)
+
+//Collects data from rounds to a contestant-centered format
+
+const contestants = [
+  {
+    name: "Joel Vanhanen",
+    id: "joel",
+    scores: [0, 0, 0],
+    roundWins: [0, 0, 0],
+    records: [-1, -1, -1]
+  },
+  {
+    name: "Johannes Sippola",
+    id: "johannes",
+    scores: [0, 0, 0],
+    roundWins: [0, 0, 0],
+    records: [-1, -1, -1]
+  },
+  {
+    name: "Tuomas Nummela",
+    id: "tuomas",
+    scores: [0, 0, 0],
+    roundWins: [0, 0, 0],
+    records: [-1, -1, -1]
+  }
+]
+
+  let roundsRef = firebase.database().ref('rounds')
+
+  let rounds = []
+  
+  roundsRef.once('value', (snapshot_rounds) => {
+      const seasonRounds = snapshot_rounds.val()['2021']
+      rounds.push(seasonRounds)
+
+
+      for(let season = 2021; season <= currentSeason; season++){
+
+        const seasonRounds = rounds[season-2021]
+
+    
+        seasonRounds.forEach(seasonRound =>{
+          contestants.forEach(contestant => {
+    
+            contestant.scores[season-2021] += seasonRound[contestant.id]
+    
+            if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
+    
+            contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
+          })
+        })
+
+        
+      }
+  })
+
+
+
+/*
   const rounds =
   [
     [
@@ -51,56 +112,20 @@ function App() {
     [],
     []
   ]
-
-  const currentSeason = 2021
-
-
-  //Collects data from rounds to a contestant-centered format
-
-  const contestants = [
-    {
-      name: "Joel Vanhanen",
-      id: "joel",
-      scores: [0, 0, 0],
-      roundWins: [0, 0, 0],
-      records: [-1, -1, -1]
-    },
-    {
-      name: "Johannes Sippola",
-      id: "johannes",
-      scores: [0, 0, 0],
-      roundWins: [0, 0, 0],
-      records: [-1, -1, -1]
-    },
-    {
-      name: "Tuomas Nummela",
-      id: "tuomas",
-      scores: [0, 0, 0],
-      roundWins: [0, 0, 0],
-      records: [-1, -1, -1]
-    }
-  ]
-  
-  for(let season = 2021; season <= currentSeason; season++){
-    
-    rounds[season-2021]
-    .forEach(seasonRound => {
-      contestants.forEach(contestant => {
-
-        contestant.scores[season-2021] += seasonRound[contestant.id]
-
-        if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
-
-        contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
-      })
-    })
-  }
-
+*/
 
   
 
-
+  //Render handling
   const [appState, setAppState] = useState("main")
+
+  if(currentSeason < 2021 || contestants.length < 3 || rounds.length+2 < 1){
+    return(
+      <div>
+        <h3>Ladataan...</h3>
+      </div>
+    )
+  }
 
   switch(appState){
     case "main":
