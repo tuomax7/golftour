@@ -12,29 +12,48 @@ import firebase from './Firebase.js'
 function App() {
 
   //Rounds to firebase
-
-  const rounds = [
+  const rounds =
+  [
     [
       {
-        course: "Master club Forest",
         date: "8.6.2021",
-        joel: 33,
+        course: "Master club Forest",
         johannes: 17,
+        joel: 33,
         tuomas: 18,
         winner: "Joel Vanhanen"
       },
       {
-        course: "HIFK",
-        date: "9.6.2021",
-        joel: 50,
-        johannes: 20,
-        tuomas: 16,
+        date: "26.6.2021",
+        course: "Archipelagia",
+        johannes: 14,
+        joel: 38,
+        tuomas: 20,
+        winner: "Joel Vanhanen"
+      },
+      {
+        date: "18.7.2021",
+        course: "Master club Forest",
+        johannes: 28,
+        joel: 42,
+        tuomas: 29,
+        winner: "Joel Vanhanen"
+      },
+      {
+        date: "23.7.2021",
+        course: "Master club Master",
+        johannes: 21,
+        joel: 32,
+        tuomas: 29,
         winner: "Joel Vanhanen"
       }
-    ]
+    ],
+    [],
+    []
   ]
 
-  const currentSeason = rounds.length+2020
+  const currentSeason = 2021
+
 
   //Collects data from rounds to a contestant-centered format
 
@@ -78,129 +97,6 @@ function App() {
   }
 
 
-  
-/*
-
-  const contestants = [
-    {
-      name: "Joel Vanhanen",
-      scores: [83],
-      roundWins: [2],
-      records: [50]
-    },
-    {
-      name: "Johannes Sippola",
-      scores: [37],
-      roundWins: [0],
-      records: [20]
-    },
-    {
-      name: "Tuomas Nummela",
-      scores: [34],
-      roundWins: [0],
-      records: [18]
-    }
-  ]
-
-  /*
-
-  const [contestants, setContestants] = useState([])
-  const [rounds, setRounds] = useState([])
-
-  useEffect(() => {
-    firebase
-    .firestore()
-    .collection('contestants')
-    .onSnapshot((snapshot) => {
-      const newContestants = snapshot.docs.map((doc) => ({
-        ...doc.data()
-      }))
-
-      setContestants(newContestants)
-    })
-  }, [])
-
-
-
-  useEffect(() => {
-    firebase
-    .firestore()
-    .collection('2022')
-    .onSnapshot((snapshot) => {
-      const newRounds = snapshot.docs.map((doc) => ({
-        ...doc.data()
-      }))
-
-      setRounds(rounds.concat(newRounds))
-    })
-  }, [])
-
-/*
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection('rounds')
-      .doc('2021')
-      .collection('2021')
-      .doc('18_7_2021')
-      .collection('18_7_2021')
-      .onSnapshot((snapshot) => {
-        const newSeasonRounds = snapshot.docs.map((doc) => ({
-          ...doc.data()
-        }))
-
-        const newRounds = [...rounds]
-
-        newRounds.push(newSeasonRounds)
-
-
-        setRounds(newRounds)
-        console.log(rounds)
-      })
-  }, [])
-*/
-  
-
-
-  
-/*
-  const [rounds, setRounds] = useState(
-    [
-      [
-        {
-          date: "8.6.2021",
-          course: "Master club Forest",
-          johannes: 17,
-          joel: 33,
-          tuomas: 18
-        },
-        {
-          date: "26.6.2021",
-          course: "Archipelagia",
-          johannes: 14,
-          joel: 38,
-          tuomas: 20
-        },
-        {
-          date: "18.7.2021",
-          course: "Master club Forest",
-          johannes: 28,
-          joel: 42,
-          tuomas: 29
-        },
-        {
-          date: "23.7.2021",
-          course: "Master club Master",
-          johannes: 21,
-          joel: 32,
-          tuomas: 29
-        }
-      ],
-      [],
-      []
-    ]
-  )
-*/
   
 
 
