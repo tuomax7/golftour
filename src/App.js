@@ -79,13 +79,12 @@ function App() {
       records: [-1, -1, -1]
     }
   ]
-
-
-  for(var season = 2021; season <= currentSeason; season++){
+  
+  for(let season = 2021; season <= currentSeason; season++){
+    
     rounds[season-2021]
-
-    .map(seasonRound => {
-      contestants.map(contestant => {
+    .forEach(seasonRound => {
+      contestants.forEach(contestant => {
 
         contestant.scores[season-2021] += seasonRound[contestant.id]
 
