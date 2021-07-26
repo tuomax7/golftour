@@ -11,8 +11,7 @@ import firebase from './Firebase.js'
 
 function App() {
 
-  //Rounds and currentseason to firebase
-  const [currentSeason] = useState(2021)
+  //Rounds to firebase
 
   const rounds = [
     [
@@ -32,27 +31,10 @@ function App() {
         tuomas: 16,
         winner: "Joel Vanhanen"
       }
-    ],
-    [
-      {
-        course: "Sarfvik",
-        date: "8.6.2022",
-        joel: 500,
-        johannes: 200,
-        tuomas: 18,
-        winner: "Joel Vanhanen"
-      },
-      {
-        course: "Guugeli",
-        date: "9.6.2022",
-        joel: 50,
-        johannes: 20,
-        tuomas: 16,
-        winner: "Joel Vanhanen"
-      }
     ]
   ]
 
+  const currentSeason = rounds.length+2020
 
   //Collects data from rounds to a contestant-centered format
 
