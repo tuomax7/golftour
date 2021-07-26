@@ -40,7 +40,7 @@ const contestants = [
     records: [-1, -1, -1]
   }
 ]
-
+/*
   let roundsRef = firebase.database().ref('rounds')
 
   let rounds = []
@@ -50,29 +50,11 @@ const contestants = [
       rounds.push(seasonRounds)
 
 
-      for(let season = 2021; season <= currentSeason; season++){
-
-        const seasonRounds = rounds[season-2021]
-
-    
-        seasonRounds.forEach(seasonRound =>{
-          contestants.forEach(contestant => {
-    
-            contestant.scores[season-2021] += seasonRound[contestant.id]
-    
-            if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
-    
-            contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
-          })
-        })
-
-        
-      }
   })
+*/
 
 
 
-/*
   const rounds =
   [
     [
@@ -112,20 +94,29 @@ const contestants = [
     [],
     []
   ]
-*/
+
+  for(let season = 2021; season <= currentSeason; season++){
+
+    const seasonRounds = rounds[season-2021]
+
+
+    seasonRounds.forEach(seasonRound =>{
+      contestants.forEach(contestant => {
+
+        contestant.scores[season-2021] += seasonRound[contestant.id]
+
+        if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
+
+        contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
+      })
+    })
+    
+  }
 
   
 
   //Render handling
   const [appState, setAppState] = useState("main")
-
-  if(currentSeason < 2021 || contestants.length < 3 || rounds.length+2 < 1){
-    return(
-      <div>
-        <h3>Ladataan...</h3>
-      </div>
-    )
-  }
 
   switch(appState){
     case "main":

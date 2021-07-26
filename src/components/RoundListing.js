@@ -1,7 +1,7 @@
 import React from 'react'
 
 const RoundListing = ({currentSeason, contestants, rounds}) => {
-
+    
     return(
         <div>
             <h3>Kauden {currentSeason} kierrokset</h3>
@@ -13,7 +13,7 @@ const RoundListing = ({currentSeason, contestants, rounds}) => {
                         {contestants.map(contestant => <th key={contestant.name}>{contestant.name}</th>)}
                     </tr>
                     
-                    {rounds['2021'].map(round => 
+                    {rounds[currentSeason-2021].map(round => 
                         <tr key={round.date+round.johannes+round.joel+round.tuomas}>
                             <td>{round.date}</td>
                             <td>{round.course}</td>
