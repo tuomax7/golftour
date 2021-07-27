@@ -3,7 +3,7 @@ import Leaderboard from './components/Leaderboard.js'
 // import ScoreInput from './components/ScoreInput.js'
 import Navbar from './components/Navbar.js'
 
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import RoundListing from './components/RoundListing.js';
 
 import firebase from './Firebase.js'
@@ -13,7 +13,38 @@ function App() {
 
   //Rounds to firebase
 
+  const [rounds, setRounds] = useState([])
+
+  const [roundsHolder] = useState([])
+
   const [currentSeason, setCurrentSeason] = useState(2021)
+
+  const roundsRef = firebase.database().ref('rounds')
+
+  const [loaded, setLoaded] = useState(false)
+
+  if(!loaded){
+    roundsRef.once('value', (seasons_snapshot) => {
+      setCurrentSeason(seasons_snapshot.val().current_season)
+      const seasonsData = seasons_snapshot.val()
+  
+      for(const seasonData in seasonsData){
+        
+        const seasonRoundsData = seasonsData[seasonData]
+  
+        const season = []
+  
+        for(const roundData in seasonRoundsData){
+  
+          const seasonRoundData = seasonRoundsData[roundData]
+          season.push(seasonRoundData)
+        }
+        roundsHolder.push(season)
+      }
+      setRounds(roundsHolder)
+    })
+    setLoaded(true)
+  }
 
 //Collects data from rounds to a contestant-centered format
 
@@ -40,77 +71,25 @@ const contestants = [
     records: [-1, -1, -1]
   }
 ]
-/*
-  let roundsRef = firebase.database().ref('rounds')
 
-  let rounds = []
+  if(rounds.length > 0){
+    for(let season = 2021; season <= currentSeason; season++){
+
+      const seasonRounds = rounds[season-2021]
   
-  roundsRef.once('value', (snapshot_rounds) => {
-      const seasonRounds = snapshot_rounds.val()['2021']
-      rounds.push(seasonRounds)
-
-
-  })
-*/
-
-
-
-  const rounds =
-  [
-    [
-      {
-        date: "8.6.2021",
-        course: "Master club Forest",
-        johannes: 17,
-        joel: 33,
-        tuomas: 18,
-        winner: "Joel Vanhanen"
-      },
-      {
-        date: "26.6.2021",
-        course: "Archipelagia",
-        johannes: 14,
-        joel: 38,
-        tuomas: 20,
-        winner: "Joel Vanhanen"
-      },
-      {
-        date: "18.7.2021",
-        course: "Master club Forest",
-        johannes: 28,
-        joel: 42,
-        tuomas: 29,
-        winner: "Joel Vanhanen"
-      },
-      {
-        date: "23.7.2021",
-        course: "Master club Master",
-        johannes: 21,
-        joel: 32,
-        tuomas: 29,
-        winner: "Joel Vanhanen"
-      }
-    ],
-    [],
-    []
-  ]
-
-  for(let season = 2021; season <= currentSeason; season++){
-
-    const seasonRounds = rounds[season-2021]
-
-
-    seasonRounds.forEach(seasonRound =>{
-      contestants.forEach(contestant => {
-
-        contestant.scores[season-2021] += seasonRound[contestant.id]
-
-        if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
-
-        contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
+  
+      seasonRounds.forEach(seasonRound =>{
+        contestants.forEach(contestant => {
+  
+          contestant.scores[season-2021] += seasonRound[contestant.id]
+  
+          if(seasonRound.winner === contestant.name) contestant.roundWins[season-2021]++
+  
+          contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
+        })
       })
-    })
-    
+      
+    }
   }
 
   
@@ -118,6 +97,14 @@ const contestants = [
   //Render handling
   const [appState, setAppState] = useState("main")
 
+  if(rounds.length < 1){
+    return(
+      <div>
+        <p>Ladataan...</p>
+      </div>
+    )
+  }
+  
   switch(appState){
     case "main":
       return(
