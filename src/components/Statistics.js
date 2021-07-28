@@ -2,14 +2,16 @@ import React from 'react'
 
 const Statistics = ({contestants, rounds}) => {
 
-    const selectedSeason = 0
+    const selectedSeason = null
 
 
     //CONSIDER MOVING DATA HANDLING TO APP.JS OR A SEPARATE FILE -> SAME DATA MAY BE NEEDED IN PROFILES
 
 
+    //Functions for generating statistical figures
+
     const getScore = (scores) => {
-        if(selectedSeason === 0){
+        if(selectedSeason === null){
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             return scores.reduce(reducer)
         }
@@ -17,7 +19,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
     const getRecord = (records) => {
-        if(selectedSeason === 0){
+        if(selectedSeason === null){
             return Math.max(...records)
         }
         return records[selectedSeason-2021]
@@ -25,7 +27,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
     const getAverage = (scores) => {
-        if(selectedSeason === 0){
+        if(selectedSeason === null){
             let roundsCount = 0
             rounds.forEach(seasonRounds => {
                 roundsCount += seasonRounds.length
@@ -38,6 +40,14 @@ const Statistics = ({contestants, rounds}) => {
         return Math.round(avg * 100) / 100
     }
 
+    const getRoundWins = (wins) => {
+        if(selectedSeason === null){
+            const reducer = (accumulator, currentValue) => accumulator + currentValue;
+            return wins.reduce(reducer)
+        }
+        return wins[selectedSeason-2021]
+    }
+
 
     const contestantStatsList= [
         {
@@ -45,24 +55,24 @@ const Statistics = ({contestants, rounds}) => {
             score: getScore(contestants[0].scores),
             record: getRecord(contestants[0].records),
             average: getAverage(contestants[0].scores),
-            roundWins: 2,
-            championships: 2
+            roundWins: getRoundWins(contestants[0].roundWins),
+            championships: contestants[0].championships
         },
         {
             name: "Johannes Sippola",
             score: getScore(contestants[1].scores),
             record: getRecord(contestants[1].records),
             average: getAverage(contestants[1].scores),
-            roundWins: 3,
-            championships: 3
+            roundWins: getRoundWins(contestants[1].roundWins),
+            championships: contestants[1].championships
         },
         {
             name: "Tuomas Nummela",
             score: getScore(contestants[2].scores),
             record: getRecord(contestants[2].records),
             average: getAverage(contestants[2].scores),
-            roundWins: 4,
-            championships: 4
+            roundWins: getRoundWins(contestants[2].roundWins),
+            championships: contestants[2].championships
         }
     ]
 
@@ -77,7 +87,7 @@ const Statistics = ({contestants, rounds}) => {
                         <th>Piste-ennätys</th>
                         <th>Pistekeskiarvo</th>
                         <th>Kierrosvoitot</th>
-                        {selectedSeason === 0 && <th>Kausimestaruudet</th>}
+                        {selectedSeason === null && <th>Kausimestaruudet</th>}
                     </tr>
                     
                     {contestantStatsList.map((contestantStats, index) => 
@@ -88,7 +98,7 @@ const Statistics = ({contestants, rounds}) => {
                             <td>{contestantStats.record}</td>
                             <td>{contestantStats.average}</td>
                             <td>{contestantStats.roundWins}</td>
-                            {selectedSeason === 0 && <td>{contestantStats.championships}</td>}
+                            {selectedSeason === null && <td>{contestantStats.championships}</td>}
                         </tr>
                     )}
                 </tbody>

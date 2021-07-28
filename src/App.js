@@ -54,21 +54,24 @@ const contestants = [
     id: "joel",
     scores: [0, 0, 0],
     roundWins: [0, 0, 0],
-    records: [-1, -1, -1]
+    records: [-1, -1, -1],
+    championships: 0
   },
   {
     name: "Johannes Sippola",
     id: "johannes",
     scores: [0, 0, 0],
     roundWins: [0, 0, 0],
-    records: [-1, -1, -1]
+    records: [-1, -1, -1],
+    championships: 0
   },
   {
     name: "Tuomas Nummela",
     id: "tuomas",
     scores: [0, 0, 0],
     roundWins: [0, 0, 0],
-    records: [-1, -1, -1]
+    records: [-1, -1, -1],
+    championships: 0
   }
 ]
 
@@ -88,6 +91,21 @@ const contestants = [
           contestant.records[season-2021] = Math.max(contestant.records[season-2021], seasonRound[contestant.id])
         })
       })
+
+      if(season < currentSeason){
+
+        contestants.sort((a, b) => {
+
+          if(a.scores[currentSeason-2021] === b.scores[currentSeason-2021]){
+              return b.roundWins[currentSeason-2021]-a.roundWins[currentSeason-2021]
+          }
+          return b.scores[currentSeason-2021] - a.scores[currentSeason-2021]
+        })
+
+        contestants[0].championships++
+        
+      }
+
       
     }
   }
