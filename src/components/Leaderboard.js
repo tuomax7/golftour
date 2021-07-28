@@ -23,7 +23,7 @@ const Leaderboard = ({contestants, setContestants, currentSeason, appState}) => 
                 <table>
                     <tbody>
                         <tr>
-                            <th>Sija</th>
+                            <th>Sijoitus</th>
                             <th>Nimi</th>
                             <th>Bogeypisteet</th>
                             <th>Kierrosvoitot</th>

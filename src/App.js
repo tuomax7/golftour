@@ -1,7 +1,7 @@
 import './App.css';
 import Leaderboard from './components/Leaderboard.js'
-// import ScoreInput from './components/ScoreInput.js'
 import Navbar from './components/Navbar.js'
+import Statistics from './components/Statistics.js'
 
 import {useState} from 'react'
 import RoundListing from './components/RoundListing.js';
@@ -95,7 +95,7 @@ const contestants = [
   
 
   //Render handling
-  const [appState, setAppState] = useState("main")
+  const [appState, setAppState] = useState("stats")
 
   if(rounds.length < 1){
     return(
@@ -119,7 +119,7 @@ const contestants = [
       return(
         <div>
           <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-          <p>Stats</p>
+          <Statistics />
         </div>
       )
       
