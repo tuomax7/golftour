@@ -137,7 +137,7 @@ const contestants = [
       return(
         <div>
           <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-          <Statistics contestants={contestants} rounds={rounds}/>
+          <Statistics contestants={contestants} rounds={rounds} currentSeason={currentSeason}/>
         </div>
       )
     case "rounds":

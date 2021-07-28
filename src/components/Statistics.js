@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Statistics = ({contestants, rounds}) => {
+const Statistics = ({contestants, rounds, currentSeason}) => {
 
-    const selectedSeason = null
+    const selectedSeason = 'All-time'
+
+    const seasonNames = ['All-time']
+
+    for(let i = 2021; i <= currentSeason; i++){
+        seasonNames.push(i)
+    }
+
 
 
     //CONSIDER MOVING DATA HANDLING TO APP.JS OR A SEPARATE FILE -> SAME DATA MAY BE NEEDED IN PROFILES
@@ -11,7 +18,7 @@ const Statistics = ({contestants, rounds}) => {
     //Functions for generating statistical figures
 
     const getScore = (scores) => {
-        if(selectedSeason === null){
+        if(selectedSeason === 'All-time'){
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             return scores.reduce(reducer)
         }
@@ -19,7 +26,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
     const getRecord = (records) => {
-        if(selectedSeason === null){
+        if(selectedSeason === 'All-time'){
             return Math.max(...records)
         }
         return records[selectedSeason-2021]
@@ -27,7 +34,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
     const getAverage = (scores) => {
-        if(selectedSeason === null){
+        if(selectedSeason === 'All-time'){
             let roundsCount = 0
             rounds.forEach(seasonRounds => {
                 roundsCount += seasonRounds.length
@@ -41,7 +48,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
     const getRoundWins = (wins) => {
-        if(selectedSeason === null){
+        if(selectedSeason === 'All-time'){
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             return wins.reduce(reducer)
         }
@@ -49,7 +56,7 @@ const Statistics = ({contestants, rounds}) => {
     }
 
 
-    const contestantStatsList= [
+    const contestantStatsList = [
         {
             name: "Joel Vanhanen",
             score: getScore(contestants[0].scores),
@@ -78,6 +85,11 @@ const Statistics = ({contestants, rounds}) => {
 
     return(
         <div>
+            <div>
+                <select>
+                    {seasonNames.map(seasonName => <option key={seasonName}>{seasonName}</option>)}
+                </select>
+            </div>
             <table>
                 <tbody>
                     <tr>
@@ -87,7 +99,7 @@ const Statistics = ({contestants, rounds}) => {
                         <th>Piste-ennätys</th>
                         <th>Pistekeskiarvo</th>
                         <th>Kierrosvoitot</th>
-                        {selectedSeason === null && <th>Kausimestaruudet</th>}
+                        {selectedSeason === 'All-time' && <th>Kausimestaruudet</th>}
                     </tr>
                     
                     {contestantStatsList.map((contestantStats, index) => 
@@ -98,7 +110,7 @@ const Statistics = ({contestants, rounds}) => {
                             <td>{contestantStats.record}</td>
                             <td>{contestantStats.average}</td>
                             <td>{contestantStats.roundWins}</td>
-                            {selectedSeason === null && <td>{contestantStats.championships}</td>}
+                            {selectedSeason === 'All-time' && <td>{contestantStats.championships}</td>}
                         </tr>
                     )}
                 </tbody>
