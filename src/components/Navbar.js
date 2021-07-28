@@ -7,8 +7,8 @@ const Navbar = ({currentSeason, appState, setAppState}) => {
             <h1>GolfTour</h1>
             <button onClick={() => setAppState("main")}>Kausi {currentSeason}</button>
             <button onClick={() => setAppState("stats")}>Tilastot</button>
+            <button onClick={() => setAppState("rounds")}>Kierrokset</button>
             <button onClick={() => setAppState("profiles")}>Pelaajaprofiilit</button>
-            {/* <button onClick={() => setAppState("input")}>Syötä pisteitä</button> */}
         </div>
     )
 }

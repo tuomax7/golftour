@@ -119,7 +119,14 @@ const contestants = [
       return(
         <div>
           <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-          <Statistics />
+          <Statistics contestants={contestants} rounds={rounds}/>
+        </div>
+      )
+    case "rounds":
+      return(
+        <div>
+          <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
+          <p>Kierrokset - tämä näyttää kaikki valitun kauden kierrokset etusivun tapaan</p>
         </div>
       )
       
@@ -127,7 +134,8 @@ const contestants = [
         return(
           <div>
             <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-            <p>Profiles</p>
+            <p>Pelaajaprofiilit - täällä voi pelaajakohtaisesti tutkia statistiikkasivun tietoja</p>
+            <p>HARKITSE VIELÄ ONKO TURHAA TOISTOA STATISTIIKKASIVUN OHELLA?</p>
           </div>
         )
       default:
