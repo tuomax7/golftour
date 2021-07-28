@@ -2,9 +2,9 @@ import './App.css';
 import Leaderboard from './components/Leaderboard.js'
 import Navbar from './components/Navbar.js'
 import Statistics from './components/Statistics.js'
+import RoundListing from './components/RoundListing.js';
 
 import {useState} from 'react'
-import RoundListing from './components/RoundListing.js';
 
 import firebase from './Firebase.js'
 
@@ -109,11 +109,10 @@ const contestants = [
       
     }
   }
-
   
 
   //Render handling
-  const [appState, setAppState] = useState("stats")
+  const [appState, setAppState] = useState("main")
 
   if(rounds.length < 1){
     return(
@@ -147,15 +146,7 @@ const contestants = [
           <p>Kierrokset - tämä näyttää kaikki valitun kauden kierrokset etusivun tapaan</p>
         </div>
       )
-      
-      case "profiles":
-        return(
-          <div>
-            <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-            <p>Pelaajaprofiilit - täällä voi pelaajakohtaisesti tutkia statistiikkasivun tietoja</p>
-            <p>HARKITSE VIELÄ ONKO TURHAA TOISTOA STATISTIIKKASIVUN OHELLA?</p>
-          </div>
-        )
+    
       default:
         return(
           <div>

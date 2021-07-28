@@ -1,13 +1,46 @@
 import React from 'react'
+import {useState} from 'react'
 
 const Statistics = ({contestants, rounds, currentSeason}) => {
 
-    const selectedSeason = 'All-time'
+    //Setting the inspected season
 
-    const seasonNames = ['All-time']
+    const [selectedSeason, setSelectedSeason] = useState('Kaikki kaudet')
+
+    const seasonNames = ['Kaikki kaudet']
 
     for(let i = 2021; i <= currentSeason; i++){
         seasonNames.push(i)
+    }
+
+    const seasonSelected = () => {
+        const seasonSelector = document.getElementById('seasonSelector');
+        setSelectedSeason(seasonSelector.value)
+
+        if(selectedSorter === 'championships' && seasonSelector.value !== 'Kaikki kaudet'){
+            setSelectedSorter('score')
+        }
+    }
+
+    //Setting the inspected sorter
+
+    const [selectedSorter, setSelectedSorter] = useState('score')
+
+    const sorterLabels = ['Pisteet', 'Piste-ennätys', 'Pistekeskiarvo', 'Kierrosvoitot']
+
+    if(selectedSeason === 'Kaikki kaudet')sorterLabels.push('Kausimestaruudet')
+
+    const sorterLabelDecoder = {
+        'Pisteet' : 'score',
+        'Piste-ennätys' : 'record',
+        'Pistekeskiarvo' : 'average',
+        'Kierrosvoitot' : 'roundWins',
+        'Kausimestaruudet' : 'championships'
+    }
+
+    const sorterSelected = () => {
+        const sorterSelecter = document.getElementById('sorterSelecter');
+        setSelectedSorter(sorterLabelDecoder[sorterSelecter.value])
     }
 
 
@@ -18,7 +51,7 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
     //Functions for generating statistical figures
 
     const getScore = (scores) => {
-        if(selectedSeason === 'All-time'){
+        if(selectedSeason === 'Kaikki kaudet'){
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             return scores.reduce(reducer)
         }
@@ -26,7 +59,7 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
     }
 
     const getRecord = (records) => {
-        if(selectedSeason === 'All-time'){
+        if(selectedSeason === 'Kaikki kaudet'){
             return Math.max(...records)
         }
         return records[selectedSeason-2021]
@@ -34,7 +67,7 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
     }
 
     const getAverage = (scores) => {
-        if(selectedSeason === 'All-time'){
+        if(selectedSeason === 'Kaikki kaudet'){
             let roundsCount = 0
             rounds.forEach(seasonRounds => {
                 roundsCount += seasonRounds.length
@@ -48,46 +81,45 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
     }
 
     const getRoundWins = (wins) => {
-        if(selectedSeason === 'All-time'){
+        if(selectedSeason === 'Kaikki kaudet'){
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             return wins.reduce(reducer)
         }
         return wins[selectedSeason-2021]
     }
 
+    const contestantStatsList = contestants.map(contestant => {
+        return(
+            {
+                name: contestant.name,
+                score: getScore(contestant.scores),
+                record: getRecord(contestant.records),
+                average: getAverage(contestant.scores),
+                roundWins: getRoundWins(contestant.roundWins),
+                championships: contestant.championships
+            }
+        )
+    })
 
-    const contestantStatsList = [
-        {
-            name: "Joel Vanhanen",
-            score: getScore(contestants[0].scores),
-            record: getRecord(contestants[0].records),
-            average: getAverage(contestants[0].scores),
-            roundWins: getRoundWins(contestants[0].roundWins),
-            championships: contestants[0].championships
-        },
-        {
-            name: "Johannes Sippola",
-            score: getScore(contestants[1].scores),
-            record: getRecord(contestants[1].records),
-            average: getAverage(contestants[1].scores),
-            roundWins: getRoundWins(contestants[1].roundWins),
-            championships: contestants[1].championships
-        },
-        {
-            name: "Tuomas Nummela",
-            score: getScore(contestants[2].scores),
-            record: getRecord(contestants[2].records),
-            average: getAverage(contestants[2].scores),
-            roundWins: getRoundWins(contestants[2].roundWins),
-            championships: contestants[2].championships
-        }
-    ]
+
+    //Sorting by the inspected sorter before rendering
+    contestantStatsList.sort((a, b) => {
+        return b[selectedSorter] - a[selectedSorter]
+    })
 
     return(
         <div>
             <div>
-                <select>
+                <select id='seasonSelector' defaultValue='placeholder' onChange={seasonSelected}>
+
+                    <option value='placeholder' disabled hidden>Valitse kausi</option>
                     {seasonNames.map(seasonName => <option key={seasonName}>{seasonName}</option>)}
+                </select>
+
+                <select id='sorterSelecter' defaultValue='placeholder' onChange={sorterSelected}>
+
+                    <option value='placeholder' disabled hidden>Valitse järjestämisperuste</option>
+                    {sorterLabels.map(sorterLabel => <option key={sorterLabel}>{sorterLabel}</option>)}
                 </select>
             </div>
             <table>
@@ -99,7 +131,7 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
                         <th>Piste-ennätys</th>
                         <th>Pistekeskiarvo</th>
                         <th>Kierrosvoitot</th>
-                        {selectedSeason === 'All-time' && <th>Kausimestaruudet</th>}
+                        {selectedSeason === 'Kaikki kaudet' && <th>Kausimestaruudet</th>}
                     </tr>
                     
                     {contestantStatsList.map((contestantStats, index) => 
@@ -110,7 +142,7 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
                             <td>{contestantStats.record}</td>
                             <td>{contestantStats.average}</td>
                             <td>{contestantStats.roundWins}</td>
-                            {selectedSeason === 'All-time' && <td>{contestantStats.championships}</td>}
+                            {selectedSeason === 'Kaikki kaudet' && <td>{contestantStats.championships}</td>}
                         </tr>
                     )}
                 </tbody>
