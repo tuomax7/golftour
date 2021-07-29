@@ -9,8 +9,9 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
 
     const seasonNames = ['Kaikki kaudet']
 
-    for(let i = 2021; i <= currentSeason; i++){
-        seasonNames.push(i)
+    for(let season = 2021; season <= currentSeason; season++){
+        if(rounds[season-2021].length === 0) continue
+        seasonNames.push(season)
     }
 
     const seasonSelected = () => {

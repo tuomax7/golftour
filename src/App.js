@@ -3,6 +3,7 @@ import Leaderboard from './components/Leaderboard.js'
 import Navbar from './components/Navbar.js'
 import Statistics from './components/Statistics.js'
 import RoundListing from './components/RoundListing.js';
+import Rounds from './components/Rounds.js'
 
 import {useState} from 'react'
 
@@ -31,14 +32,17 @@ function App() {
       for(const seasonData in seasonsData){
         
         const seasonRoundsData = seasonsData[seasonData]
-  
+
         const season = []
+
+        if(seasonRoundsData !== 'undef'){
+          for(const roundData in seasonRoundsData){
   
-        for(const roundData in seasonRoundsData){
-  
-          const seasonRoundData = seasonRoundsData[roundData]
-          season.push(seasonRoundData)
+            const seasonRoundData = seasonRoundsData[roundData]
+            season.push(seasonRoundData)
+          }
         }
+  
         roundsHolder.push(season)
       }
       setRounds(roundsHolder)
@@ -52,25 +56,25 @@ const contestants = [
   {
     name: "Joel Vanhanen",
     id: "joel",
-    scores: [0, 0, 0],
-    roundWins: [0, 0, 0],
-    records: [-1, -1, -1],
+    scores: [0],
+    roundWins: [0],
+    records: [0],
     championships: 0
   },
   {
     name: "Johannes Sippola",
     id: "johannes",
-    scores: [0, 0, 0],
-    roundWins: [0, 0, 0],
-    records: [-1, -1, -1],
+    scores: [],
+    roundWins: [],
+    records: [],
     championships: 0
   },
   {
     name: "Tuomas Nummela",
     id: "tuomas",
-    scores: [0, 0, 0],
-    roundWins: [0, 0, 0],
-    records: [-1, -1, -1],
+    scores: [],
+    roundWins: [],
+    records: [],
     championships: 0
   }
 ]
@@ -79,7 +83,14 @@ const contestants = [
     for(let season = 2021; season <= currentSeason; season++){
 
       const seasonRounds = rounds[season-2021]
-  
+
+      contestants.forEach(contestant => {
+        contestant.scores[season-2021] = 0
+        contestant.roundWins[season-2021] = 0
+        contestant.records[season-2021] = 0
+      })
+
+      if(seasonRounds.length === 0) continue
   
       seasonRounds.forEach(seasonRound =>{
         contestants.forEach(contestant => {
@@ -105,14 +116,12 @@ const contestants = [
         contestants[0].championships++
         
       }
-
-      
     }
   }
   
 
   //Render handling
-  const [appState, setAppState] = useState("main")
+  const [appState, setAppState] = useState("rounds")
 
   if(rounds.length < 1){
     return(
@@ -143,7 +152,7 @@ const contestants = [
       return(
         <div>
           <Navbar currentSeason={currentSeason} appState={appState} setAppState={setAppState}/>
-          <p>Kierrokset - tämä näyttää kaikki valitun kauden kierrokset etusivun tapaan</p>
+          <Rounds contestants={contestants} rounds={rounds} currentSeason={currentSeason}/>
         </div>
       )
     
