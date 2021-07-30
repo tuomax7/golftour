@@ -121,7 +121,7 @@ const contestants = [
   
 
   //Render handling
-  const [appState, setAppState] = useState("rounds")
+  const [appState, setAppState] = useState("main")
 
   if(rounds.length < 1){
     return(

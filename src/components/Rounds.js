@@ -50,12 +50,14 @@ const Rounds = ({contestants, rounds, currentSeason}) => {
 
     return(
         <div>
-            <select id='seasonSelector' defaultValue='placeholder' onChange={seasonSelected}>
+            <div>
+                <select id='seasonSelector' defaultValue='placeholder' onChange={seasonSelected}>
 
-                <option value='placeholder' disabled hidden>Valitse kausi</option>
-                {seasonNames.map(seasonName => <option key={seasonName}>{seasonName}</option>)}
+                    <option value='placeholder' disabled hidden>Valitse kausi</option>
+                    {seasonNames.map(seasonName => <option key={seasonName}>{seasonName}</option>)}
 
-            </select>
+                </select>
+            </div>
 
             <table>
                 <tbody>

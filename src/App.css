@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+/*Styling from https://www.w3schools.com*/
+
+div{
+  margin-bottom: 10px;
+}
+
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+table tr #sorter {
+  background-color: #05583a8e;
+}
+
+button {
+  background-color: #04AA6D;
+  border: solid 2px white;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+select {
+  padding: 15px 32px;
+  background-color: #04AA6D;
+  border: solid 2px white;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+}
+
+button:hover, select:hover {
+  background-color: rgb(23, 78, 2);
+  border: solid 2px black;
+  cursor: pointer;
+}

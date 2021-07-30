@@ -40,8 +40,22 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
     }
 
     const sorterSelected = () => {
+
+        //Erasing old highlighting
+        let sorterCells = document.getElementsByClassName(selectedSorter)
+        for (let i = 0; i < sorterCells.length; i++) {
+            sorterCells[i].style = '';
+        }
+
         const sorterSelecter = document.getElementById('sorterSelecter');
         setSelectedSorter(sorterLabelDecoder[sorterSelecter.value])
+
+        //New highlighting
+        sorterCells = document.getElementsByClassName(sorterLabelDecoder[sorterSelecter.value])
+
+        for (let j = 0; j < sorterCells.length; j++) {
+            sorterCells[j].style = 'background-color: rgb(0 0 0 / 35%);'
+        }
     }
 
 
@@ -139,11 +153,11 @@ const Statistics = ({contestants, rounds, currentSeason}) => {
                         <tr key={contestantStats.name}>
                             <td>{index+1}</td>
                             <td>{contestantStats.name}</td>
-                            <td>{contestantStats.score}</td>
-                            <td>{contestantStats.record}</td>
-                            <td>{contestantStats.average}</td>
-                            <td>{contestantStats.roundWins}</td>
-                            {selectedSeason === 'Kaikki kaudet' && <td>{contestantStats.championships}</td>}
+                            <td className='score'>{contestantStats.score}</td>
+                            <td className='record'>{contestantStats.record}</td>
+                            <td className='average'>{contestantStats.average}</td>
+                            <td className='roundWins'>{contestantStats.roundWins}</td>
+                            {selectedSeason === 'Kaikki kaudet' && <td className='championships'>{contestantStats.championships}</td>}
                         </tr>
                     )}
                 </tbody>

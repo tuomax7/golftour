@@ -20,7 +20,7 @@ const RoundListing = ({currentSeason, contestants, rounds}) => {
     
     return(
         <div>
-            <h3>Kauden {currentSeason} kierrokset</h3>
+            <h2>Kauden {currentSeason} kierrokset</h2>
             <table>
                 <tbody>
                     <tr>
